@@ -10,6 +10,7 @@ In General this is a E-Commerce Site for my future E-Commerce store :D
 ## 🔧 Technologies I use
 
 - 🐍 Python
+- 🐍 Django
 
 ## 🔐 Registration and Authentication
 
