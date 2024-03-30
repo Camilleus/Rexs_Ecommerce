@@ -29,7 +29,9 @@ There is no such thing bro
 
 #### Set Up Environment Variables
 
-There is no such thing bro
+```bash
+virt\Scripts\activate
+```
 
 #### Run the Application
 
