@@ -24,9 +24,9 @@ def signin_page(request):
 
 def login_user_page(request):
     if request.method == 'POST': 
-        login = request.POST.get('login_field')
-        password = request.POST.get('password')
-        user = authenticate(request, username=login, password=password) 
+        login_c = request.POST['login_field']  
+        password = request.POST['password']
+        user = authenticate(request, username=login_c, password=password) 
         if user is not None:
             login(request, user)
             messages.success(request, 'You have been logged in successfully')
