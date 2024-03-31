@@ -23,7 +23,18 @@ def signin_page(request):
 
 
 def login_user_page(request):
-
+    if request.method == 'POST': 
+        login = request.POST.get('login_field')
+        password = request.POST.get('password')
+        user = authenticate(request, username=login, password=password) 
+        if user is not None:
+            login(request, user)
+            messages.success(request, 'You have been logged in successfully')
+            return redirect('home')
+        else:
+            messages.success(request, 'There was an error logging in, please try again')
+            return redirect('login')
+    else:
         return render(request, 'login.html', {})
 
 
