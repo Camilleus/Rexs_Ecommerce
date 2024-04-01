@@ -44,3 +44,19 @@ class ProfilePicForm(forms.ModelForm):
 	class Meta:
 		model = Profile
 		fields = ('profile_image', 'profile_bio', 'homepage_link', 'facebook_link', 'instagram_link', 'linkedin_link', )
+
+class MeepForm(forms.ModelForm):
+	body = forms.CharField(required=True, 
+		widget=forms.widgets.Textarea(
+			attrs={
+			"placeholder": "Enter Your Musker Meep!",
+			"class":"form-control",
+			}
+			),
+			label="",
+		)
+
+	class Meta:
+		model = Meep
+		exclude = ("user", "likes",)
+
