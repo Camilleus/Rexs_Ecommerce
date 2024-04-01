@@ -23,19 +23,23 @@ def about_page(request):
 
 
 def signup_user_page(request):
+    form = SignUpForm()
     if request.method == 'POST': 
-        login_c = request.POST['login_field']  
-        password = request.POST['password']
-        user = authenticate(request, username=login_c, password=password) 
-        if user is not None:
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+
+            user = authenticate(username=username, password=password)
             login(request, user)
-            messages.success(request, 'You have been logged in successfully')
+            messages.success(request, 'You have successfully signed up! Welcome!')
             return redirect('home')
         else:
-            messages.success(request, 'There was an error logging in, please try again')
-            return redirect('login')
+            messages.success(request, 'Whoops! There was an error signin up, please try again')
+            return redirect('signup')
     else:
-        return render(request, 'home.html', {})
+        return render(request, 'signup.html', {'form': form})
 
 
 def login_user_page(request):

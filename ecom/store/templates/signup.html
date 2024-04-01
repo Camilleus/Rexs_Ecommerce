@@ -20,29 +20,19 @@
     <section>
         <div class="container">
             <div class = "row">
-                <center>
-                    <div class = "col-md-6">
-                        <form method="POST" action='{% url 'signup'%}'>
+                    <div class = "col-md-6 offset-md-3">
+                        <form method="POST" action='{% url 'signup' %}'>
                             {% csrf_token %}
                             <br></br>
-                            <div class="mb-3">
-                              <label for="loginField" class="form-label">Email address or Username</label>
-                              <input type="text" class="form-control" name="login_field">
-                            </div>
-                            <div class="mb-3">
-                              <label for="exampleInputPassword1" class="form-label">Password</label>
-                              <input type="password" class="form-control" name="password">
-                            </div>
+                            {{ form.as_p }}
+                            <br></br>
                             <button type="submit" class="btn btn-secondary">Sign Up</button>
-                          </form>                          
+                            <br></br>
+                            <br></br>
+                            <br></br>
+                            <br></br>
+                        </form>                          
                     </div>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                </center>
             </div>
         </div>
     </section>
