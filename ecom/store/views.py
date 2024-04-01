@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect
-from .models import Category, Customer, Product, Order
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User, AbstractUser
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 from django import forms
+
+from .models import Category, Customer, Product, Order
+from .forms import ProfilePicForm, MeepForm, SignUpForm
 
 
 def home_page(request):
@@ -21,8 +23,19 @@ def about_page(request):
 
 
 def signup_user_page(request):
-    messages.success(request, 'Signed up successfully')
-    return render(request, 'signup.html', {})
+    if request.method == 'POST': 
+        login_c = request.POST['login_field']  
+        password = request.POST['password']
+        user = authenticate(request, username=login_c, password=password) 
+        if user is not None:
+            login(request, user)
+            messages.success(request, 'You have been logged in successfully')
+            return redirect('home')
+        else:
+            messages.success(request, 'There was an error logging in, please try again')
+            return redirect('login')
+    else:
+        return render(request, 'home.html', {})
 
 
 def login_user_page(request):
