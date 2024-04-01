@@ -17,7 +17,7 @@ def about_page(request):
     return render(request, 'about.html', {})
 
 
-def signin_page(request):
+def signin_user_page(request):
     messages.success(request, 'Signed in successfully')
     return render(request, 'signin.html', {})
 
