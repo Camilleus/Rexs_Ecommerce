@@ -8,9 +8,9 @@
     <header class="bg-dark py-5">
         <div class="container px-4 px-lg-5 my-5">
           <div class="text-center text-white">
-            <h1 class="display-4 fw-bolder">Sign In</h1>
+            <h1 class="display-4 fw-bolder">Sign Up</h1>
             <p class="lead fw-normal text-white-50 mb-0">
-                Sign In To Our Store
+                Sign Up To Our Store
             </p>
           </div>
         </div>
@@ -22,7 +22,7 @@
             <div class = "row">
                 <center>
                     <div class = "col-md-6">
-                        <form method="POST" action='{% url 'signin'%}'>
+                        <form method="POST" action='{% url 'signup'%}'>
                             {% csrf_token %}
                             <br></br>
                             <div class="mb-3">
@@ -33,7 +33,7 @@
                               <label for="exampleInputPassword1" class="form-label">Password</label>
                               <input type="password" class="form-control" name="password">
                             </div>
-                            <button type="submit" class="btn btn-secondary">Log In</button>
+                            <button type="submit" class="btn btn-secondary">Sign Up</button>
                           </form>                          
                     </div>
                     <br></br>

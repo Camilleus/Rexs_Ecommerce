@@ -20,9 +20,9 @@ def about_page(request):
     return render(request, 'about.html', {})
 
 
-def signin_user_page(request):
-    messages.success(request, 'Signed in successfully')
-    return render(request, 'signin.html', {})
+def signup_user_page(request):
+    messages.success(request, 'Signed up successfully')
+    return render(request, 'signup.html', {})
 
 
 def login_user_page(request):
