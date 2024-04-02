@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User, AbstractUser
@@ -14,8 +14,9 @@ def home_page(request):
     return render(request, 'home.html', {'products': products})
 
 
-def product_page(request):
-    return render(request, 'product.html', {})
+def product_page(request, pk):
+    product = Product.objects.get(id=pk)
+    return render(request, 'product.html', {'product': product})
 
 
 def about_page(request):
