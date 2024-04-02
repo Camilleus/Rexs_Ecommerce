@@ -15,8 +15,9 @@ def home_page(request):
 
 
 def product_page(request, pk):
-    product = Product.objects.get(id=pk)
-    return render(request, 'product.html', {'product': product})
+    product = get_object_or_404(Product, id=pk)
+    related_products = Product.objects.filter(category__name=product.category.name).exclude(id=pk)
+    return render(request, 'product.html', {'product': product, 'related_products': related_products})
 
 
 def about_page(request):
