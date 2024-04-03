@@ -36,13 +36,9 @@
                         </li>
                         <li><a class="dropdown-item" href="{% url 'home' %}">Popular Items</a></li>
                         <li><a class="dropdown-item" href="{% url 'home' %}">New Arrivals</a></li>
-                        <li><a class="dropdown-item" href="{% url 'category' 'basenowe' %}">Basenowe</a></li>
-                        <li><a class="dropdown-item" href="{% url 'category' 'zimowe' %}">Zimowe</a></li>
-                        <li><a class="dropdown-item" href="{% url 'category' 'letnie' %}">Letnie</a></li>
-                        <li><a class="dropdown-item" href="{% url 'category' 'jesienne' %}">Jesienne</a></li>
-                        <li><a class="dropdown-item" href="{% url 'category' 'wiosenne' %}">Wiosenne</a></li>
-                        <li><a class="dropdown-item" href="{% url 'category' 'modne' %}">Modne</a></li>
-                        <li><a class="dropdown-item" href="{% url 'category' 'okulary' %}">Okulary</a></li>
+                        {% for category in categories %}
+                        <li><a class="dropdown-item" href="{% url 'category' category.name %}">{{ category.name }}</a></li>
+                        {% endfor %}
                         </ul>
                     </li>
                     {% if not user.is_authenticated %}

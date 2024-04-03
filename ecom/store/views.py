@@ -25,7 +25,8 @@ def category_page(request, foo):
     try:
         category = get_object_or_404(Category, name=foo)
         products = Product.objects.filter(category=category)
-        return render(request, 'category.html', {'category': category, 'products': products})
+        categories = Category.objects.all()
+        return render(request, 'category.html', {'category': category, 'categories': categories, 'products': products})
     except:
         messages.success(request, 'Whoops! This Category does not exist!')
         return redirect('home')
