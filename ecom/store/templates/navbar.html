@@ -37,7 +37,7 @@
                         <li><a class="dropdown-item" href="{% url 'home' %}">Popular Items</a></li>
                         <li><a class="dropdown-item" href="{% url 'home' %}">New Arrivals</a></li>
                         {% for category in categories %}
-                        <li><a class="dropdown-item" href="{% url 'category' category.name %}">{{ category.name }}</a></li>
+                            <li><a class="dropdown-item" href="{% url 'category' category.name %}">{{ category.name }}</a></li>
                         {% endfor %}
                         </ul>
                     </li>

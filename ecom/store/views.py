@@ -7,17 +7,17 @@ from django import forms
 
 from .models import Category, Customer, Product, Order
 from .forms import ProfilePicForm, MeepForm, SignUpForm
-
+categories = Category.objects.all()
 
 def home_page(request):
     products = Product.objects.all()
-    return render(request, 'home.html', {'products': products})
+    return render(request, 'home.html', {'products': products, 'categories': categories})
 
 
 def product_page(request, pk):
     product = get_object_or_404(Product, id=pk)
     related_products = Product.objects.filter(category__name=product.category.name).exclude(id=pk)
-    return render(request, 'product.html', {'product': product, 'related_products': related_products})
+    return render(request, 'product.html', {'product': product, 'categories': categories, 'related_products': related_products})
 
 
 def category_page(request, foo):
@@ -25,7 +25,6 @@ def category_page(request, foo):
     try:
         category = get_object_or_404(Category, name=foo)
         products = Product.objects.filter(category=category)
-        categories = Category.objects.all()
         return render(request, 'category.html', {'category': category, 'categories': categories, 'products': products})
     except:
         messages.success(request, 'Whoops! This Category does not exist!')
@@ -33,7 +32,7 @@ def category_page(request, foo):
 
 
 def about_page(request):
-    return render(request, 'about.html', {})
+    return render(request, 'about.html', {'categories': categories})
 
 
 def signup_user_page(request):
@@ -53,7 +52,7 @@ def signup_user_page(request):
             messages.success(request, 'Whoops! There was an error signin up, please try again')
             return redirect('signup')
     else:
-        return render(request, 'signup.html', {'form': form})
+        return render(request, 'signup.html', {'form': form, 'categories': categories})
 
 
 def login_user_page(request):
@@ -69,7 +68,7 @@ def login_user_page(request):
             messages.success(request, 'There was an error logging in, please try again')
             return redirect('login')
     else:
-        return render(request, 'login.html', {})
+        return render(request, 'login.html', {'categories': categories})
 
 
 def logout_user_page(request):
