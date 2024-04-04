@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 
-from ecom.store.models import Category, Product
+from store.models import Category, Product
 
 
 categories = Category.objects.all()
@@ -9,7 +9,7 @@ categories = Category.objects.all()
 
 def cart_page(request):
     products = Product.objects.all()
-    return render(request, 'home.html', {'products': products, 'categories': categories})
+    return render(request, 'cart_summary.html', {'products': products, 'categories': categories})
 
 def cart_add_page(request):
     pass

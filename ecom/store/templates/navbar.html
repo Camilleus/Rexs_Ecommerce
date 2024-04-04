@@ -48,11 +48,11 @@
                     <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Log Out</a></li>
                     {% endif %}
                     </ul>
-                    <button class="btn btn-outline-dark" type="submit">
+                    <a href="{% url 'cart_page' %}" class="btn btn-outline-dark">
                         <i class="bi-cart-fill me-1"></i>
                         Cart
                         <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                    </button>
+                    </a>
                     </form>
                 </div>
                 </div>
