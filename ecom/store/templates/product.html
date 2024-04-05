@@ -38,7 +38,9 @@
                 value="1"
                 style="max-width: 3rem"
               />
-              <button class="btn btn-outline-dark flex-shrink-0" type="button">
+              <a href="#!" > ID: {{ product.id }}<a/>
+              <button class="btn btn-outline-dark flex-shrink-0" value="{{ product.id }}" 
+              type="button" id="add-cart">
                 <i class="bi-cart-fill me-1"></i>
                 Add to cart
               </button>
@@ -139,5 +141,27 @@
     </div>
   </div>
 </section>
+
+
+<script>
+  $(document).on('click', '#add-cart', function(e){
+    e.preventDefault();
+    $.ajax({
+      type: "POST",
+      url: "{% url 'cart_add_page' %}",
+      data: {
+        product_id: $('#add-cart').val(),
+        csrfmiddlewaretoken: '{{ csrf_token }}',
+        action: 'post'
+      },
+      success: function(json){
+        console.log(json)
+      }
+      error: function(xhr, errmsg, err){
+        console.log(xhr, errmsg, err)
+      }
+    });
+  })
+</script>
 
 {% endblock%}
