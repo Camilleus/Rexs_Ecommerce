@@ -154,7 +154,8 @@
         action: 'post'
       },
       success: function(json){
-        console.log(json)
+        //console.log(json)
+        document.getElementById("cart-count").innerHTML = json.cart_count
       },
       error: function(xhr, errmsg, err){
         console.log(xhr, errmsg, err)

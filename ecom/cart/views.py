@@ -19,8 +19,12 @@ def cart_add_page(request):
         product_id = int(request.POST.get('product_id'))
         product = get_object_or_404(Product, id=product_id)
         cart.add(product=product) 
-        response = JsonResponse({'Product Name: ': product.name})
-        return response
+        cart_count = len(cart)
+        response_data = {
+            'product_name': product.name,
+            'cart_count': cart_count
+        }
+        return JsonResponse(response_data)
 
 def cart_update_page(request): 
     pass
