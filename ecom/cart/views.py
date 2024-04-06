@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from django.http import JsonResponse
 
 
+from .cart import Cart
 from store.models import Category, Product
 
 
@@ -12,7 +14,13 @@ def cart_page(request):
     return render(request, 'cart_summary.html', {'products': products, 'categories': categories})
 
 def cart_add_page(request):
-    pass
+    cart = Cart(request)
+    if request.POST.get('action') == 'post':
+        product_id = int(request.POST.get('product_id'))
+        product_qty = int(request.POST.get('product_qty'))
+        product = get_object_or_404(Product, id=product_id)
+        cart.add(product=product, qty=product_qty)
+        return JsonResponse({'status': 'success'})
 
 def cart_update_page(request): 
     pass
