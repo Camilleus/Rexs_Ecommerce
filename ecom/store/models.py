@@ -30,6 +30,7 @@ class Product(models.Model):
     id = models.AutoField(primary_key=True, auto_created=True, verbose_name='ID', unique=True)
     name = models.CharField(max_length=100)
     price = models.DecimalField(default=0, max_digits=7, decimal_places=2)
+    quantity = models.IntegerField(default=0)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
     description = models.CharField(max_length=500, default='', blank=True, null=True)
     image = models.ImageField(upload_to='uploads/product/')
