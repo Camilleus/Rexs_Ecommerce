@@ -1,4 +1,3 @@
-
 class Cart():
     def __init__(self, request):
         self.session = request.session
@@ -15,13 +14,12 @@ class Cart():
         product_id = str(product.id)
         
         if product_id in self.cart:
-            pass
+            self.cart[product_id]['qty'] += 1
         else:
-            self.cart[product_id] = {'price': str(product.price)}
+            self.cart[product_id] = {'price': str(product.price), 'qty': 1}
             
         self.session.modified = True
 
 
     def __len__(self):
-        return len(self.cart)
-        
+        return sum(item['qty'] for item in self.cart.values())
