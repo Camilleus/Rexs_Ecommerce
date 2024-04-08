@@ -13,6 +13,55 @@
       </div>
     </header>
 
+    <section>
+        <div class="container">
+            <div class = "row">
+                    <div class = "col-md-6 offset-md-3">
+                        <br></br>
+                          {% for product in cart_products %}
+                              <div class="container px-4 px-lg-5 my-5">
+                                <div class="row gx-4 gx-lg-5 align-items-center">
+                                  <div class="col-md-6">
+                                    <img
+                                      class="card-img-top mb-5 mb-md-0"
+                                      src="{{ product.image.url }}"
+                                      alt="..."
+                                    />
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="small mb-1"></div>
+                                    <h1 class="display-5 fw-bolder">{{product.name}}</h1>
+                                    <div class="fs-5 mb-5">
+                                      {% if product.is_sale %}
+                                        <div class="d-flex small text-warning mb-2">
+                                          <div class="bi-star-fill">
+                                          </div> &nbsp; &nbsp; Sale! &nbsp;&nbsp; 
+                                          <div class="bi-star-fill"></div> 
+                                        </div>
+                                      <span class="text-decoration-line-through">{{product.price}} zł</span>
+                                      <span>{{product.sale_price}} zł</span>
+                                      {% else %}
+                                      <span>{{product.price}} zł</span>
+                                      {% endif  %}
+                                    </div>
+                                    <p class="lead">{{product.description}}</p>
+                                    <div class="d-flex">
+                                      <input
+                                        class="form-control text-center me-3"
+                                        id="inputQuantity"
+                                        type="num"
+                                        value="1"
+                                        style="max-width: 3rem"
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                          {% endfor %}
+                    </div>
+            </div>
+        </div>
+    </section>
     <br></br>
     <br></br>
     <br></br>

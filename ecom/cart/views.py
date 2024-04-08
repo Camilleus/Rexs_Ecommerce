@@ -10,8 +10,10 @@ categories = Category.objects.all()
 
 
 def cart_page(request):
+    cart = Cart(request)
     products = Product.objects.all()
-    return render(request, 'cart_summary.html', {'products': products, 'categories': categories})
+    cart_products = cart.get_prods()
+    return render(request, 'cart_summary.html', {'products': products, 'categories': categories, 'cart_products': cart_products})
 
 def cart_add_page(request):
     cart = Cart(request)
