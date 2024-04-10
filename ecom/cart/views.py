@@ -14,7 +14,7 @@ def cart_page(request):
     products = Product.objects.all()
     cart_products = cart.get_prods()
     quantities = cart.get_quants()
-    return render(request, 'cart_summary.html', {'products': products, 'categories': categories, 'cart_products': cart_products})
+    return render(request, 'cart_summary.html', {'products': products, 'categories': categories, 'cart_products': cart_products, 'quantities': quantities})
 
 def cart_add_page(request):
     cart = Cart(request)
