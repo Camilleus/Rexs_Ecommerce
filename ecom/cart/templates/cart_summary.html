@@ -47,13 +47,19 @@
                                     </div>
                                     <p class="lead">{{product.description}}</p>
                                     <div class="d-flex">
-                                      <input
-                                        class="form-control text-center me-3"
-                                        id="inputQuantity"
-                                        type="num"
-                                        value="1"
-                                        style="max-width: 3rem"
-                                      />
+                                      <div class="row">
+                                        <div class="col-md-2">Quantity</div>
+                                        <div class="col-mw-4">
+                                          <select class="form-select" id="qty-cart">
+                                            {% for quantity in quantities %}
+                                              {% if quantity.product_id == product.id|slugify %}
+                                                <option selected>{{ quantity.quantity }}</option>
+                                              {% else %}
+                                                <option>{{ quantity.quantity }}</option>
+                                              {% endif %}
+                                            {% endfor %}
+                                          </select>
+                                        </div>
                                     </div>
                                   </div>
                                 </div>
