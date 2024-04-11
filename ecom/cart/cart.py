@@ -22,8 +22,8 @@ class Cart():
         if product_id in self.cart:
             pass
         else:
-            self.cart[product_id] = {'price': str(product.price), 'qty': 1}
-            int(product_qty)
+            # self.cart[product_id] = {'price': str(product.price)}
+            self.cart[product_id] = int(product_qty)
             
         self.session.modified = True
 
@@ -39,23 +39,6 @@ class Cart():
         
     
     def get_quants(self):
-        quantities = []
-        for product_id, item in self.cart.items():
-            quantities.append({'product_id': product_id, 'quantity': item['qty']})
+        quantities = self.cart
         return quantities
         
-        
-    def get_product_total(self):
-        return sum(Decimal(item['price']) * item['qty'] for item in self.cart.values())
-
-
-    def __iter__(self):
-        product_ids = self.cart.keys()
-        products = Product.objects.filter(id__in=product_ids)
-        for product in products:
-            self.cart[str(product.id)]['product'] = product
-
-        for item in self.cart.values():
-            item['price'] = Decimal(item['price'])
-            item['total_price'] = item['price'] * item['qty']
-            yield item
