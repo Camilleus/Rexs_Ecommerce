@@ -48,4 +48,14 @@ def cart_update_page(request):
 
 
 def cart_delete_page(request):
-    pass
+    cart = Cart(request)
+    if request.POST.get('action') == 'post':
+        product_id = int(request.POST.get('product_id'))
+        product = get_object_or_404(Product, id=product_id)
+        cart.delete(product=product)
+        cart_count = len(cart)
+        response_data = {
+            'product_name': product.name,
+            'cart_count': cart_count
+        }
+        return JsonResponse(response_data)
