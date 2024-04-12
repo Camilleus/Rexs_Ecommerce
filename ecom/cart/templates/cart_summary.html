@@ -39,15 +39,17 @@
                               <td>
                                 <select class="form-select" id="qty-cart-{{ product.id }}">
                                   {% for key, value in quantities.items %}
-                                      {% if key == product.id|slugify %}
+                                    {% if key == product.id|slugify %}
                                         <option selected>{{ value }}</option>
-                                        <option value=1>1</option>
-                                        <option value=2>2</option>
-                                        <option value=3>3</option>
+                                        {% for i in '123' %}
+                                            {% if i != value %}
+                                                <option value="{{ i }}">{{ i }}</option>
+                                            {% endif %}
+                                        {% endfor %}
                                         <option value=4>More (specify quantity in cart)</option>
-                                      {% else %}
+                                    {% else %}
                                         <option>{{ value }}</option>
-                                      {% endif %}
+                                    {% endif %}
                                   {% endfor %}
                                 </select>
                               </td>
