@@ -15,73 +15,134 @@
 
     <section>
         <div class="container">
-            <div class = "row">
-                    <div class = "col-md-6 offset-md-3">
-                        <br></br>
-                        {% if cart_products %}
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <br>
+                    {% if cart_products %}
+                      <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
                           {% for product in cart_products %}
-                              <div class="container px-4 px-lg-5 my-5">
-                                <div class="row gx-4 gx-lg-5 align-items-center">
-                                  <div class="col-md-6">
-                                    <img
-                                      class="card-img-top mb-5 mb-md-0"
-                                      src="{{ product.image.url }}"
-                                      alt="..."
-                                    />
-                                  </div>
-                                  <div class="col-md-6">
-                                    <div class="small mb-1"></div>
-                                    <h1 class="display-5 fw-bolder">{{product.name}}</h1>
-                                    <div class="fs-5 mb-5">
-                                      {% if product.is_sale %}
-                                        <div class="d-flex small text-warning mb-2">
-                                          <div class="bi-star-fill">
-                                          </div> &nbsp; &nbsp; Sale! &nbsp;&nbsp; 
-                                          <div class="bi-star-fill"></div> 
-                                        </div>
-                                      <span class="text-decoration-line-through">{{product.price}} zł</span>
-                                      <span>{{product.sale_price}} zł</span>
+                            <tr>
+                              <td>
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid" width="100">
+                                <br>
+                                {{ product.name }}
+                              </td>
+                              <td>
+                                <select class="form-select" id="qty-cart-{{ product.id }}">
+                                  {% for key, value in quantities.items %}
+                                      {% if key == product.id|slugify %}
+                                        <option selected>{{ value }}</option>
+                                        <option value=1>1</option>
+                                        <option value=2>2</option>
+                                        <option value=3>3</option>
+                                        <option value=4>More (specify quantity in cart)</option>
                                       {% else %}
-                                      <span>{{product.price}} zł</span>
-                                      {% endif  %}
-                                    </div>
-                                    <p class="lead">{{product.description}}</p>
-                                    <div class="d-flex">
-                                      <div class="row">
-                                        <div class="col-md-2">Quantity</div>
-                                        <div class="col-mw-4">
-                                          <select class="form-select" id="qty-cart">
-                                            {% for key, value in quantities.items %}
-                                                {% if key == product.id|slugify %}
-                                                  <option selected>{{ value }}</option>
-                                                {% else %}
-                                                  <option>{{ value }}</option>
-                                                {% endif %}
-                                            {% endfor %}
-                                          </select>
-                                        </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
+                                        <option>{{ value }}</option>
+                                      {% endif %}
+                                  {% endfor %}
+                                </select>
+                              </td>
+                              <td>
+                                {% if product.is_sale %}
+                                  <del>{{ product.price }} zł</del>
+                                  <br>
+                                  {{ product.sale_price }} zł
+                                {% else %}
+                                  {{ product.price }} zł
+                                {% endif %}
+                              </td>
+                              <td>
+                                <button type="button" class="btn btn-secondary" data-index="{{ product.id }}" id="update-cart">Update</button>
+                                <button type="button" class="btn btn-danger" data-index="{{ product.id }}" id="remove-cart">Remove</button>
+                              </td>
+                            </tr>
                           {% endfor %}
-                          {% else %}
-                          <div class="text-center">
-                              <h2>Your cart is empty</h2>
-                          </div>
-                      {% endif %}
-                    </div>
+                        </tbody>
+                        <tfoot>
+                          <tr>
+                            <th colspan="2">Total</th>
+                            <th>{{ total_price }} zł</th>
+                            <th></th>
+                          </tr>
+                        </tfoot>
+                      </table>
+                      <a href="{% url 'home' %}" class="btn btn-secondary flex-shrink-0">Continue</a>
+                    {% else %}
+                      <div class="text-center">
+                          <h2>Your cart is empty</h2>
+                      </div>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </section>
-    <br></br>
-    <br></br>
-    <br></br>
-    <br></br>
-    <br></br>
-    <br></br>
-    <br></br>
-    <br></br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
 
+    <script>
+      $(document).on('click', '#update-cart', function(e){
+        e.preventDefault();
+        var product_id = $(this).data('index');
+        var product_qty = $('#qty-cart-' + product_id + ' option:selected').text();
+        $.ajax({
+          type: "POST",
+          url: "{% url 'cart_update_page' %}",
+          data: {
+            product_id: product_id,
+            product_qty: product_qty,
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            action: 'post'
+          },
+          success: function(json){
+            //console.log(json)
+            document.getElementById("cart-count").innerHTML = json.cart_count
+            location.reload();
+          },
+          error: function(xhr, errmsg, err){
+            console.log(xhr, errmsg, err)
+          }
+        });
+      });
+
+      $(document).on('click', '#remove-cart', function(e){
+        e.preventDefault();
+        var product_id = $(this).data('index');
+        if (confirm('Are you sure you want to remove this item from your cart?')) {
+          $.ajax({
+            type: "POST",
+            url: "{% url 'cart_delete_page' %}",
+            data: {
+              product_id: product_id,
+              csrfmiddlewaretoken: '{{ csrf_token }}',
+              action: 'post'
+            },
+            success: function(json){
+              //console.log(json)
+              document.getElementById("cart-count").innerHTML = json.cart_count
+              location.reload();
+            },
+            error: function(xhr, errmsg, err){
+              console.log(xhr, errmsg, err)
+            }
+          });
+        }
+      });
+    </script>
 
 {% endblock %}
