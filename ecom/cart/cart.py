@@ -55,3 +55,12 @@ class Cart():
         if product_id in self.cart:
             del self.cart[product_id]
         self.session.modified = True
+        
+        
+    def get_total_price(self):
+        total = 0
+        quantities = self.get_quants()
+        for product_id, quantity in quantities.items():
+            product = Product.objects.get(id=product_id)
+            total += int(quantity) * float(product.price)
+        return total
